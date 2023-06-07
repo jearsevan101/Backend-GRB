@@ -104,6 +104,15 @@ app.delete("/books/:id", async (req, res) => {
       console.error(err.message);
     }
 });
+app.post("/query", async (req, res) => {
+    try {
+        const {query} = req.body;
+        const result = await pool.query(query);
+        res.json(result.rows);
+    } catch (err) {
+        console.error(err.message);
+    }
+});
 app.listen(5000, () =>{
     console.log("server has started on port 5000");
 });
