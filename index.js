@@ -2,10 +2,9 @@ const express = require("express");
 const bodyParser = require("body-parser"); // Require body-parser
 const app = express();
 app.use(bodyParser.json()); // Add body-parser middleware to parse JSON
-//app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-//const cors = require("cors");
+
 const pool = require("./db");
 
 // Allow CORS for all routes
@@ -15,8 +14,6 @@ app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
   next();
 });
-
-//app.use(express.json()); //req.body
 
 app.get("/books", async(req,res) =>{
     try {
@@ -89,7 +86,7 @@ app.put("/books/:id", async (req, res) => {
         'UPDATE book SET store_id = $1, author_id = $2, publisher_id = $3, book_name = $4, publication_year = $5, book_price = $6, pages = $7, book_quantity = $8 WHERE book_id = $9',
         [store_id, author_id, publisher_id, book_name, publication_year, book_price, pages, book_quantity, id] 
       );
-      res.json("result");
+      res.json(result);
     } catch (err) {
       console.error(err.message);
     }
